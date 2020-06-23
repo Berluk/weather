@@ -1,7 +1,6 @@
 from django.shortcuts import render
 import requests
 
-from .models import City
 from .forms import CityForm
 from src.helper_class.reader_csv_file import ReaderCsvFile
 
