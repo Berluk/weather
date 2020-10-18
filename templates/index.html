@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+  <div class="site-content" style="background-image: url('https://apod.nasa.gov/apod/image/2007/Kristine-Rose-Photography-20200616_001s1024.jpg')">
+			<div class="hero">
+				<div class="container">
+            <form method="post" action="." class="find-location">
+              {% csrf_token %}
+                {{ form.name }}
+              <input type="submit" value="Find">
+            </form>
+          {% if message %}
+          <div class="container-alert alert alert-primary" role="alert">
+              {{ message }}
+          </div>
+          {% endif %}
+				</div>
+			</div>
+				<div class="container">
+					<div class="forecast-container">
+            <div class="today forecast">
+              <div class="forecast-header">
+                <div class="day">Current weather</div>
+                <div class="date">6 Oct</div>
+              </div>
+              <div class="forecast-content">
+								<div class="location">{{ city_weather.city }}</div>
+								<div class="degree">
+									<div class="num">{{ current_weather.current_day.current_temp }}<sup>o</sup>C</div>
+									<div class="forecast-icon">
+										<img src="http://openweathermap.org/img/w/{{ current_weather.current_day.current_icon }}.png" alt="" width=90>
+									</div>
+								</div>
+                <h7>{{ current_weather.current_day.current_desc }}</h7>
+{#								<span><img src="{% static 'images/icon-umberella.png' %}" alt="">20%</span>#}
+{#								<span><img src="{% static 'images/icon-wind.png' %}" alt="">18km/h</span>#}
+{#								<span><img src="{% static 'images/icon-compass.png' %}" alt="">East</span>#}
+							</div>
+            </div>
+
+            {% for key, item in forecast.items %}
+                <div class="forecast">
+                  <div class="forecast-header">
+                    <div class="day">{{ key }}</div>
+                  </div> <!-- .forecast-header -->
+                  <div class="forecast-content">
+                    <div class="forecast-icon">
+                      <img src="http://openweathermap.org/img/w/{{ item.icon }}.png" alt="" width=48>
+                    </div>
+                    <div class="degree">{{ item.max_temp }}<sup>o</sup>C</div>
+                    <small>{{ item.min_temp }}<sup>o</sup></small>
+                    <br>
+                    <h7>{{ item.description }}</h7>
+                  </div>
+                </div>
+            {% endfor %}
+					</div>
+				</div>
+			</div>
+  <main class="main-content">
+				<div class="fullwidth-block">
+					<div class="container">
+						<h2 class="section-title">Live cameras</h2>
+						<div class="row">
+							<div class="col-md-3 col-sm-6">
+								<div class="live-camera">
+									<figure class="live-camera-cover"><img src="{% static 'images/live-camera-1.jpg' %}" alt=""></figure>
+									<h3 class="location">New York</h3>
+									<small class="date">8 oct, 8:00AM</small>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="live-camera">
+									<figure class="live-camera-cover"><img src="{% static 'images/live-camera-2.jpg' %}" alt=""></figure>
+									<h3 class="location">Los Angeles</h3>
+									<small class="date">8 oct, 8:00AM</small>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="live-camera">
+									<figure class="live-camera-cover"><img src="{% static 'images/live-camera-3.jpg' %}" alt=""></figure>
+									<h3 class="location">Chicago</h3>
+									<small class="date">8 oct, 8:00AM</small>
+								</div>
+							</div>
+							<div class="col-md-3 col-sm-6">
+								<div class="live-camera">
+									<figure class="live-camera-cover"><img src="{% static 'images/live-camera-4.jpg' %}" alt=""></figure>
+									<h3 class="location">London</h3>
+									<small class="date">8 oct, 8:00AM</small>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="fullwidth-block">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-4">
+								<h2 class="section-title">Application features</h2>
+								<ul class="arrow-feature">
+									<li>
+										<h3>Natus error sit voluptatem accusantium</h3>
+										<p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
+									</li>
+									<li>
+										<h3>Natus error sit voluptatem accusantium</h3>
+										<p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
+									</li>
+									<li>
+										<h3>Natus error sit voluptatem accusantium</h3>
+										<p>Doloremque laudantium totam rem aperiam Inventore veritatis et quasi architecto beatae vitae.</p>
+									</li>
+								</ul>
+							</div>
+							<div class="col-md-4">
+								<h2 class="section-title">Weather analyssis</h2>
+								<ul class="arrow-list">
+									<li><a href="#">Accusantium doloremque laudantium rem aperiam</a></li>
+									<li><a href="#">Eaque ipsa quae ab illo inventore veritatis quasi</a></li>
+									<li><a href="#">Architecto beatae vitae dicta sunt explicabo</a></li>
+									<li><a href="#">Nemo enim ipsam voluptatem quia voluptas</a></li>
+									<li><a href="#">Aspernatur aut odit aut fugit, sed quia consequuntur</a></li>
+									<li><a href="#">Magni dolores eos qui ratione voluptatem sequi</a></li>
+									<li><a href="#">Neque porro quisquam est qui dolorem ipsum quia</a></li>
+								</ul>
+							</div>
+							<div class="col-md-4">
+								<h2 class="section-title">Awesome Photos</h2>
+								<div class="photo-grid">
+									<a href="#"><img src="{% static 'images/thumb-1.jpg' %}" alt="#"></a>
+									<a href="#"><img src="{% static 'images/thumb-2.jpg' %}" alt="#"></a>
+									<a href="#"><img src="{% static 'images/thumb-3.jpg' %}" alt="#"></a>
+									<a href="#"><img src="{% static 'images/thumb-4.jpg' %}" alt="#"></a>
+									<a href="#"><img src="{% static 'images/thumb-5.jpg' %}" alt="#"></a>
+									<a href="#"><img src="{% static 'images/thumb-6.jpg' %}" alt="#"></a>
+									<a href="#"><img src="{% static 'images/thumb-7.jpg' %}" alt="#"></a>
+									<a href="#"><img src="{% static 'images/thumb-8.jpg' %}" alt="#"></a>
+									<a href="#"><img src="{% static 'images/thumb-9.jpg' %}" alt="#"></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</main> <!-- .main-content -->
+  </div>
+
+{% endblock content %}
