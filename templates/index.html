@@ -3,14 +3,19 @@
 
 {% block content %}
 
-  <div class="site-content">
-			<div class="hero" data-bg-image="{% static 'images/banner.png' %}">
+  <div class="site-content" style="background-image: url('https://apod.nasa.gov/apod/image/2007/Kristine-Rose-Photography-20200616_001s1024.jpg')">
+			<div class="hero">
 				<div class="container">
             <form method="post" action="." class="find-location">
               {% csrf_token %}
                 {{ form.name }}
               <input type="submit" value="Find">
             </form>
+          {% if message %}
+          <div class="container-alert alert alert-primary" role="alert">
+              {{ message }}
+          </div>
+          {% endif %}
 				</div>
 			</div>
 				<div class="container">

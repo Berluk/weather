@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import requests
+from django.http import HttpResponseRedirect
 
 from .forms import CityForm
 from helper_class.reader_csv_file import ReaderCsvFile
@@ -66,8 +67,8 @@ def forecast_weather(url):
 
 def index(request):
     key = ReaderCsvFile.read_csv_file(0, 1)
+    err_msg: bool = False
     message = ''
-    message_class = ''
 
     if request.method == 'POST':
         form = CityForm(request.POST)
@@ -76,14 +77,16 @@ def index(request):
             city_name = form.cleaned_data['name']
             coord = GetLocation().get_location_by_city_name(city_name)
             if coord:
-                print('True')
+                print(True)
             else:
                 coord = GetLocation().get_location_by_ip_address()
                 current_location = f'https://api.openweathermap.org/data/2.5/weather?lat={coord[0]}&lon={coord[1]}&units=metric&appid={key}'
                 city_name = requests.get(current_location).json()['name']
                 err_msg = True
 
-        message = err_msg
+        if err_msg:
+            message = 'City does not exist in the world'
+
         form = CityForm()
 
         url = f'https://api.openweathermap.org/data/2.5/onecall?lat={coord[0]}&lon={coord[1]}&exclude=hourly,minutely&units=metric&appid={key}'

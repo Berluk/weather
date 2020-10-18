@@ -1,5 +1,6 @@
 from datetime import datetime
 import calendar
+import requests
 
 
 class GetDay:
@@ -12,3 +13,9 @@ class GetDay:
         days = datetime.strptime(date, '%d %m %Y').weekday()
         day_name = calendar.day_name[days]
         return day_name, month_name
+
+    @classmethod
+    def nasa_image(cls):
+        url = 'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY'
+        response = requests.get(url)
+        return response.json()['url']
